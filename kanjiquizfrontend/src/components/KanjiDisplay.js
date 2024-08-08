@@ -31,7 +31,7 @@ const KanjiDisplay = () => {
 
     const handleGuess = (event) => {
         event.preventDefault();
-        if (guess === kanji.reading) {
+        if (kanji.reading.includes(guess)) {
             setMessage('Correct')
             getKanji();
         } else {

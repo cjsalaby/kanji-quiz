@@ -42,7 +42,7 @@ public class KanjiService {
             return kanjiData.getCards().stream().map(card -> {
                 Kanji kanji = new Kanji();
                 kanji.setKanji(card.getQuestion());
-                kanji.setReading(card.getAnswer().get(0)); // Assuming there's at least one answer
+                kanji.setReading(card.getAnswer());
                 kanji.setMeaning(card.getMeaning());
                 return kanji;
             }).collect(Collectors.toList());

@@ -2,12 +2,16 @@ package com.cjsalabye.quiz.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Kanji {
 
     @Id
     private String kanji;
-    private String reading;
+
+    @ElementCollection
+    private List<String> reading;
 
     @Column(columnDefinition = "TEXT")
     private String meaning;
@@ -16,7 +20,7 @@ public class Kanji {
         this.kanji = kanji;
     }
 
-    public void setReading(String reading) {
+    public void setReading(List<String> reading) {
         this.reading = reading;
     }
 
@@ -28,7 +32,7 @@ public class Kanji {
         return kanji;
     }
 
-    public String getReading() {
+    public List<String> getReading() {
         return reading;
     }
 

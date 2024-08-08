@@ -32,7 +32,7 @@ public class KanjiInit {
                 for(KanjiData.Card card : cards) {
                     Kanji kanji = new Kanji();
                     kanji.setKanji(card.getQuestion());
-                    kanji.setReading(card.getAnswer().get(0));
+                    kanji.setReading(card.getAnswer());
                     kanji.setMeaning(card.getMeaning());
                     kanjiRepository.save(kanji);
                 }
