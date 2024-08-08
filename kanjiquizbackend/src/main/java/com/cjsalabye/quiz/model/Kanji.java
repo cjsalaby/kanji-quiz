@@ -6,19 +6,11 @@ import jakarta.persistence.*;
 public class Kanji {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String kanji;
     private String reading;
 
     @Column(columnDefinition = "TEXT")
     private String meaning;
-
-    //TODO: setters and getters
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setKanji(String kanji) {
         this.kanji = kanji;
@@ -30,10 +22,6 @@ public class Kanji {
 
     public void setMeaning(String meaning) {
         this.meaning = meaning;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getKanji() {

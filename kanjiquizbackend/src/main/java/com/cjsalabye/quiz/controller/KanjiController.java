@@ -3,10 +3,9 @@ package com.cjsalabye.quiz.controller;
 import com.cjsalabye.quiz.model.Kanji;
 import com.cjsalabye.quiz.service.KanjiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/kanji")
@@ -19,6 +18,11 @@ public class KanjiController {
     @GetMapping("/random")
     public Kanji getRandomKanji() {
         return kanjiService.getRandomKanji();
+    }
+
+    @GetMapping("/{deck}")
+    public List<Kanji> getKanjiByDeck(@PathVariable String deck) {
+        return kanjiService.loadKanjiDeck(deck);
     }
 
 }
