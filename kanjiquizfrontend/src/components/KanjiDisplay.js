@@ -14,24 +14,30 @@ const ipagothic = {
 const KanjiDisplay = () => {
 
     const [kanji, setKanji] = useState(null);
+    const [level, setLevel] = useState('');
     const [guess, setGuess] = useState('');
     const [message, setMessage] = useState('');
 
-    useEffect(() => {
-
+    const getKanji =() => {
         KanjiService.getKanji()
             .then((kanji) => {
                 setKanji(kanji)
             });
+    }
 
+    useEffect(() => {
+        getKanji();
     }, []);
 
-    const handleGuess = () => {
+    const handleGuess = (event) => {
+        event.preventDefault();
         if (guess === kanji.reading) {
             setMessage('Correct')
+            getKanji();
         } else {
             setMessage('Incorrect')
         }
+        setGuess('')
     };
 
     return (
@@ -44,11 +50,16 @@ const KanjiDisplay = () => {
                     flexDirection={"column"}
                     flexGrow={1}
                     boxShadow={1}
+                    onSubmit={handleGuess}
                 >
                     {kanji && <Typography fontFamily={ipagothic} variant={"h1"} align={"center"}>{kanji.kanji}</Typography>}
-                    {kanji && <Typography flexGrow={1} variant={"body1"} align={"center"}>{kanji.meaning}</Typography>}
+                    {kanji && <Typography flexGrow={1} fontSize={24} variant={"body1"} align={"center"}>{kanji.meaning}</Typography>}
+                    {kanji && <Typography flexGrow={1} fontSize={20} variant={"body1"} align={"center"}>{message}</Typography>}
                     <TextField
                         fullWidth
+                        name={"guessfield"}
+                        id={"guessfield"}
+                        type={"text"}
                         margin="normal"
                         value={guess}
                         onChange={e => setGuess(e.target.value)}
@@ -62,9 +73,6 @@ const KanjiDisplay = () => {
                     >
                         Submit
                     </Button>
-                    <p>{message}</p>
-                    {kanji && <p>Meaning: {kanji.meaning}</p>}
-
                 </Box>
             </Container>
         </ThemeProvider>
