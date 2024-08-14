@@ -13,8 +13,6 @@ public class Player {
     private String name;
     private int score;
 
-    //todo: setters and getters
-
     public void setId(Long id) {
         this.id = id;
     }

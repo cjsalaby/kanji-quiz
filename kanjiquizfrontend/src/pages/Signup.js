@@ -9,17 +9,36 @@ import {
     ThemeProvider,
     Typography
 } from "@mui/material";
+import {useState} from "react";
+
+import AuthenticationService from '../services/AuthenticationService'
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-    const handleSubmit = (event) => {
+
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+
+        const username = data.get('username');
+        const password = data.get('password');
+        const retypePassword = data.get('retype-password');
+        console.log(username)
+
+        if (password !== retypePassword) {
+            setMessage("Passwords do not match");
+            return;
+        }
+
+        try {
+            await AuthenticationService.registerUser(username, password);
+            setMessage("Registration successful.");
+        } catch (e) {
+            setMessage(`Registration failed: ${e.message}`)
+        }
     };
 
     return (
@@ -40,10 +59,10 @@ export default function SignUp() {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
                             autoFocus
                         />
                         <TextField
@@ -72,11 +91,10 @@ export default function SignUp() {
                         >
                             Sign Up
                         </Button>
+                        {message && <Typography color={"error"}>{message}</Typography>}
                     </Box>
                 </Box>
             </Container>
         </ThemeProvider>
     );
-
-
 }
